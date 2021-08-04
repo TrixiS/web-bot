@@ -10,7 +10,7 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5000",
     ]
-    APP_PORT: int = 5000
+    APP_PORT: int = 80
 
 
 settings = Settings()

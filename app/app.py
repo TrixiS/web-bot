@@ -1,9 +1,10 @@
 from fastapi import FastAPI
-from fastapi.exceptions import HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exception_handlers import http_exception_handler
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .settings import settings
 from .routers import config, bot, logs
@@ -30,12 +31,12 @@ if settings.CORS_ORIGINS:
     )
 
 
-@app.exception_handler(HTTPException)
-async def handler_404(_: Request, exc: HTTPException):
+@app.exception_handler(StarletteHTTPException)
+async def handler_404(request: Request, exc: StarletteHTTPException):
     if exc.status_code == 404:
         return RedirectResponse("/static/index.html")
 
-    raise exc
+    return await http_exception_handler(request, exc)
 
 
 @app.on_event("startup")
