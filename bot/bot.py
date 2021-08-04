@@ -41,8 +41,8 @@ class Bot(commands.AutoShardedBot):
     def phrases(self) -> Phrases:
         return self.web_config.phrases
 
-    def run(self):
-        super().run(self.config.bot_token, bot=True)
+    async def login(self, **kwargs):
+        return await super().login(self.config.bot_token, **kwargs)
 
     async def close(self):
         for cog in self.cogs.values():
