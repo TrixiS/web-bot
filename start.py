@@ -1,3 +1,23 @@
+import os
+import platform
+
+WINDOWS = platform.system() == "Windows"
+
+if WINDOWS:
+    deps_install_exit_code = os.system(
+        "python -m pip install wheel -r requirements.txt --quiet"
+    )
+else:
+    deps_install_exit_code = os.system(
+        "python3 -m pip install -U wheel -r requirements.txt --quiet"
+    )
+
+if deps_install_exit_code != 0:
+    if WINDOWS:
+        os.system("pause")
+
+    exit(deps_install_exit_code)
+
 import logging
 import webbrowser
 import asyncio
