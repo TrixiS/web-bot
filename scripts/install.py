@@ -15,7 +15,4 @@ def deps():
     deps_install_exit_code = os.system(install_script.read_text(encoding="utf-8"))
 
     if deps_install_exit_code != 0:
-        if WINDOWS:
-            os.system("pause")
-
-        exit(deps_install_exit_code)
+        raise Exception("Intallation exit code != 0")

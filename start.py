@@ -1,7 +1,10 @@
+import os
+import traceback
 import logging
 import asyncio
 import argparse
 
+from scripts import install
 from bot import root_path
 
 
@@ -13,8 +16,6 @@ async def main():
     args = parser.parse_args()
 
     if not args.no_deps:
-        from scripts import install
-
         install.deps()
 
     from scripts import run
@@ -33,4 +34,13 @@ async def main():
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+
+    try:
+        loop.run_until_complete(main())
+    except KeyboardInterrupt:
+        pass
+    except Exception as e:
+        traceback.print_exception(type(e), e, e.__traceback__)
+
+        if install.WINDOWS:
+            os.system("pause")
