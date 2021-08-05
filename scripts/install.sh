@@ -1,1 +1,1 @@
-python3 -m "pip" install -U wheel -r requirements.txt
+python3 -m "pip" install -U wheel -r requirements.txt --quiet
